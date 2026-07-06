@@ -1,0 +1,265 @@
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+  background: #e8e8e8;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.header {
+  background: #4060a0;
+  color: #fff;
+  padding: 8px 16px;
+  border-bottom: 3px solid #2e4a7a;
+}
+
+.header h1 {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.header .logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header .logo-wrap .logo-placeholder {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #6a8abf;
+  border-radius: 3px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #4060a0;
+}
+
+.nav-bar {
+  background: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 16px;
+  font-size: 12px;
+  color: #555;
+}
+
+/* ── Container ── */
+.container {
+  max-width: 820px;
+  margin: 16px auto;
+  padding: 0 12px;
+}
+
+/* ── Fieldset / Panel ── */
+fieldset {
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 0;
+  margin-bottom: 18px;
+  padding: 0;
+}
+
+legend {
+  background: #4060a0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  margin-left: 0;
+  border: 1px solid #2e4a7a;
+}
+
+.fieldset-body {
+  padding: 14px;
+}
+
+/* ── Form ── */
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.form-table td {
+  padding: 5px 6px;
+  vertical-align: middle;
+}
+
+.form-table .lbl {
+  text-align: right;
+  width: 90px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.form-table input[type="text"] {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid #999;
+  background: #fff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.form-table input[type="text"]:focus {
+  border-color: #4060a0;
+  outline: none;
+}
+
+/* ── Buttons ── */
+.btn {
+  padding: 4px 14px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #888;
+  border-radius: 0;
+}
+
+.btn-submit {
+  background: #e8e8e8;
+  color: #333;
+}
+
+.btn-submit:hover {
+  background: #d0d0d0;
+}
+
+.btn-submit:active {
+  background: #bbb;
+}
+
+.btn-delete {
+  background: #e8e8e8;
+  color: #803030;
+}
+
+.btn-delete:hover {
+  background: #d0d0d0;
+}
+
+.form-actions {
+  padding: 8px 6px 4px;
+}
+
+/* ── Messages ── */
+.msg {
+  padding: 6px 10px;
+  font-size: 12px;
+  margin-top: 8px;
+  border: 1px solid;
+}
+
+.msg-success {
+  background: #dff0d8;
+  border-color: #b2d8a0;
+  color: #306030;
+}
+
+.msg-error {
+  background: #f2dede;
+  border-color: #d8a0a0;
+  color: #803030;
+}
+
+/* ── Data Table ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #aaa;
+  font-size: 13px;
+}
+
+.data-table thead th {
+  background: #ddd;
+  border: 1px solid #aaa;
+  padding: 5px 10px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+.data-table thead th:first-child {
+  width: 40px;
+  text-align: center;
+}
+
+.data-table thead th:last-child {
+  width: 70px;
+  text-align: center;
+}
+
+.data-table tbody td {
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  color: #333;
+}
+
+.data-table tbody td:first-child {
+  text-align: center;
+  color: #666;
+}
+
+.data-table tbody td:last-child {
+  text-align: center;
+}
+
+/* Zebra */
+.data-table tbody tr:nth-child(odd) {
+  background: #fff;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+.data-table tbody tr:hover {
+  background: #e0e8f0;
+}
+
+.table-status {
+  text-align: center;
+  padding: 16px 10px;
+  color: #888;
+  font-size: 12px;
+  background: #fff;
+}
+
+.record-count {
+  font-size: 11px;
+  color: #666;
+  padding: 6px 0 0;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 11px;
+  color: #999;
+}
+
+/* ── Responsive ── */
+@media (max-width: 580px) {
+  .form-table .lbl {
+    text-align: left;
+    display: block;
+    width: auto;
+    padding-bottom: 0;
+  }
+  .form-table td { display: block; }
+  .form-table tr { display: block; margin-bottom: 4px; }
+}
