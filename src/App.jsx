@@ -10,8 +10,12 @@ export default function App() {
   const [cargando, setCargando] = useState(true)
   const [errorRed, setErrorRed] = useState(null)
 
-  // Tema: arranca de lo que el usuario haya elegido antes, sino claro
   const [tema, setTema] = useState(() => localStorage.getItem('agenda_tema') || 'claro')
+
+  // Aplica la clase en <html> para que body y todo herede las variables
+  useEffect(() => {
+    document.documentElement.setAttribute('data-tema', tema)
+  }, [tema])
 
   const traerContactos = async () => {
     setCargando(true)
@@ -19,9 +23,8 @@ export default function App() {
     try {
       const res = await fetch(API)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const datos = await res.json()
-      setContactos(Array.isArray(datos) ? datos : [])
-    } catch (e) {
+      setContactos(Array.isArray(await res.json()) ? await res.json() : [])
+    } catch {
       setErrorRed('No se pudieron cargar los contactos. Verifica tu conexion.')
     } finally {
       setCargando(false)
@@ -30,7 +33,6 @@ export default function App() {
 
   useEffect(() => { traerContactos() }, [])
 
-  // Cuando cambia el tema lo guardo para la proxima visita
   useEffect(() => { localStorage.setItem('agenda_tema', tema) }, [tema])
 
   const agregarContacto = async (nuevo) => {
@@ -43,17 +45,14 @@ export default function App() {
     await traerContactos()
   }
 
-  const toggleTema = () => setTema(tema === 'claro' ? 'oscuro' : 'claro')
-
   return (
-    // La clase "tema-oscuro" se activa o no, y el CSS hace el resto
-    <div className={`app ${tema === 'oscuro' ? 'tema-oscuro' : ''}`}>
+    <div className="app">
       <div className="encabezado">
         <div>
           <h1>📇 AgendaMultiple</h1>
           <p className="sub">Conectada a <code>raydelto.org/agenda.php</code></p>
         </div>
-        <button className="btn btn-tema" onClick={toggleTema} title="Cambiar tema">
+        <button className="btn btn-tema" onClick={() => setTema(tema === 'claro' ? 'oscuro' : 'claro')}>
           {tema === 'claro' ? '🌙' : '☀️'}
         </button>
       </div>
