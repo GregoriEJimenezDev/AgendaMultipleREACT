@@ -1,53 +1,58 @@
-import React, { useState, useEffect } from 'react'
-import AddContact from './components/AddContact'
+import { useState, useEffect } from 'react'
 import ContactList from './components/ContactList'
-import HelpPanel from './components/HelpPanel'
+import AddContact from './components/AddContact'
 import './App.css'
 
-const STORAGE_KEY = 'agenda_contactos'
+// Unica URL de la API — asi evito repetirla en varios lados (DRY)
+const API = 'http://www.raydelto.org/agenda.php'
 
 export default function App() {
-  const [contacts, setContacts] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    try { return saved ? JSON.parse(saved) : [] } catch { return [] }
-  })
+  // El estado vive aca y baja por props a los hijos
+  const [contactos, setContactos] = useState([])
+  const [cargando, setCargando] = useState(true)
+  const [errorRed, setErrorRed] = useState(null)
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts))
-  }, [contacts])
-
-  const addContact = (nuevo) => {
-    setContacts((prev) => [...prev, { ...nuevo, id: crypto.randomUUID() }])
+  // Pedir todos los contactos al iniciar y despues de cada alta
+  const traerContactos = async () => {
+    setCargando(true)
+    setErrorRed(null)
+    try {
+      const res = await fetch(API)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const datos = await res.json()
+      // La API aveces devuelve un objeto en vez de array si hay error
+      setContactos(Array.isArray(datos) ? datos : [])
+    } catch (e) {
+      setErrorRed('No se pudieron cargar los contactos. Verifica tu conexion.')
+    } finally {
+      setCargando(false)
+    }
   }
 
-  const deleteContact = (id) => {
-    setContacts((prev) => prev.filter((c) => c.id !== id))
+  useEffect(() => { traerContactos() }, [])
+
+  // Llamada POST — la usa AddContact mediante el callback
+  const agregarContacto = async (nuevo) => {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nuevo),
+    })
+    if (!res.ok) throw new Error('El servidor rechazo el contacto.')
+    // Refresco la lista completa para traer el ID que asigna la API
+    await traerContactos()
   }
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1><span className="icon-react">⚛️</span> AgendaMultiple</h1>
-        <p className="subtitle">Gestión de contactos con React + Vite</p>
-      </header>
+      <h1>📇 AgendaMultiple</h1>
+      <p className="sub">Conectada a <code>raydelto.org/agenda.php</code></p>
 
-      <main className="app-main">
-        <div className="grid">
-          <div className="grid-col grid-col--form">
-            <AddContact onAdd={addContact} />
-          </div>
-          <div className="grid-col grid-col--list">
-            <ContactList contacts={contacts} onDelete={deleteContact} />
-          </div>
-        </div>
+      {/* AddContact solo se preocupa del formulario, no sabe de fetch */}
+      <AddContact onAgregar={agregarContacto} />
 
-        <HelpPanel />
-      </main>
-
-      <footer className="app-footer">
-        <p>AgendaMultiple &copy; 2026 &mdash; React v{React.version}</p>
-        <p className="tech">Vite &middot; Hooks &middot; localStorage &middot; GitHub Pages</p>
-      </footer>
+      {/* ContactList solo pinta la tabla, no sabe de estado */}
+      <ContactList contactos={contactos} cargando={cargando} error={errorRed} />
     </div>
   )
 }

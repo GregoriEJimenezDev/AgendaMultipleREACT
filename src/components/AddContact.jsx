@@ -1,65 +1,93 @@
 import { useState } from 'react'
 
-export default function AddContact({ onAdd }) {
-  const [form, setForm] = useState({ nombre: '', apellido: '', telefono: '' })
-  const [msg, setMsg] = useState(null)
+// Todo lo que hace: mostrar un formulario, validar que no llegue vacio,
+// y llamar a onAgregar para que el padre (App) haga el POST.
+// No sabe de fetch ni de APIs.
 
-  const validar = () => {
-    if (!form.nombre.trim()) return 'El nombre es obligatorio.'
-    if (!form.apellido.trim()) return 'El apellido es obligatorio.'
-    if (!form.telefono.trim()) return 'El teléfono es obligatorio.'
-    if (!/^[\d\s\-\+\(\)]{7,15}$/.test(form.telefono.trim()))
-      return 'El teléfono debe tener entre 7 y 15 dígitos.'
-    return null
-  }
+export default function AddContact({ onAgregar }) {
+  const [nombre, setNombre] = useState('')
+  const [apellido, setApellido] = useState('')
+  const [telefono, setTelefono] = useState('')
+  const [enviando, setEnviando] = useState(false)
+  const [mensaje, setMensaje] = useState(null)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const error = validar()
-    if (error) { setMsg({ text: error, type: 'error' }); return }
+    setMensaje(null)
 
-    onAdd({
-      nombre: form.nombre.trim(),
-      apellido: form.apellido.trim(),
-      telefono: form.telefono.trim(),
-    })
+    // Lo minimo que pide el enunciado: que no esten vacios
+    if (!nombre.trim() || !apellido.trim() || !telefono.trim()) {
+      setMensaje({ texto: 'Los tres campos son obligatorios.', tipo: 'mal' })
+      return
+    }
 
-    setForm({ nombre: '', apellido: '', telefono: '' })
-    setMsg({ text: 'Contacto agregado correctamente.', type: 'success' })
-    setTimeout(() => setMsg(null), 3000)
+    setEnviando(true)
+    try {
+      // Le devuelvo el control al padre, el hace el POST y refresca
+      await onAgregar({
+        nombre: nombre.trim(),
+        apellido: apellido.trim(),
+        telefono: telefono.trim(),
+      })
+      // Si onAgregar no lanzo error, limpio el form
+      setNombre('')
+      setApellido('')
+      setTelefono('')
+      setMensaje({ texto: 'Contacto guardado.', tipo: 'bien' })
+    } catch (e) {
+      setMensaje({ texto: e.message, tipo: 'mal' })
+    } finally {
+      setEnviando(false)
+    }
+    // El mensaje se borra solo a los 4 segundos
+    setTimeout(() => setMensaje(null), 4000)
   }
-
-  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
   return (
-    <div className="card">
-      <h2 className="card-title">✚ Nuevo contacto</h2>
+    <div className="panel">
+      <h2>✚ Agregar contacto</h2>
       <form onSubmit={handleSubmit} autoComplete="off">
-        {['nombre', 'apellido', 'telefono'].map((campo) => (
-          <div className="field" key={campo}>
-            <label htmlFor={campo}>
-              {campo.charAt(0).toUpperCase() + campo.slice(1)}
-            </label>
-            <input
-              id={campo}
-              name={campo}
-              type="text"
-              value={form[campo]}
-              onChange={onChange}
-              placeholder={
-                campo === 'telefono'
-                  ? '809-555-1234'
-                  : campo === 'nombre'
-                  ? 'Juan'
-                  : 'Pérez'
-              }
-            />
-          </div>
-        ))}
-        <button type="submit" className="btn btn--primary">
-          Guardar contacto
+
+        <div className="fila">
+          <label htmlFor="nombre">Nombre</label>
+          <input
+            id="nombre"
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            placeholder="Ej: Juan"
+          />
+        </div>
+
+        <div className="fila">
+          <label htmlFor="apellido">Apellido</label>
+          <input
+            id="apellido"
+            type="text"
+            value={apellido}
+            onChange={(e) => setApellido(e.target.value)}
+            placeholder="Ej: Perez"
+          />
+        </div>
+
+        <div className="fila">
+          <label htmlFor="telefono">Teléfono</label>
+          <input
+            id="telefono"
+            type="text"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+            placeholder="Ej: 809-555-1234"
+          />
+        </div>
+
+        <button type="submit" className="btn btn-prim" disabled={enviando}>
+          {enviando ? 'Guardando...' : 'Guardar contacto'}
         </button>
-        {msg && <div className={`msg msg--${msg.type}`}>{msg.text}</div>}
+
+        {mensaje && (
+          <div className={`msg msg-${mensaje.tipo}`}>{mensaje.texto}</div>
+        )}
       </form>
     </div>
   )
