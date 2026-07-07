@@ -172,6 +172,24 @@ header.header {
   opacity: 0.4;
 }
 
+.sub-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
 @media (max-width: 480px) {
   .header-interior {
     flex-direction: column;
@@ -390,6 +408,56 @@ header.header {
   border: 1px solid var(--borde);
   border-radius: var(--radio-sm);
   transition: background var(--transicion), border-color var(--transicion);
+}
+
+.pie-react {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.pie-atomo {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+}
+
+.pie-atomo i {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--primario);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.pie-atomo i:nth-child(1) {
+  transform: rotate(0deg);
+  clip-path: inset(0 0 50% 0);
+}
+
+.pie-atomo i:nth-child(2) {
+  transform: rotate(60deg);
+  clip-path: inset(0 0 50% 0);
+}
+
+.pie-atomo i:nth-child(3) {
+  transform: rotate(-60deg);
+  clip-path: inset(0 0 50% 0);
+}
+
+@keyframes spin-atomo {
+  to { transform: rotate(360deg); }
+}
+
+.pie-atomo {
+  animation: spin-atomo 6s linear infinite;
+}
+
+.pie-sep {
+  margin: 0 6px;
+  opacity: 0.4;
 }
 
 .ayuda {

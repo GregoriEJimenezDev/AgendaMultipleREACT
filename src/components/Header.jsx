@@ -18,8 +18,7 @@ export default function Header({ tema, onToggleTema }) {
         agenda.php
         <span className="sep">/</span>
         contactos
-        <span className="sep">·</span>
-        Hecho con React
+        <span className="sub-badge">⚛️ React</span>
       </div>
     </header>
   )
