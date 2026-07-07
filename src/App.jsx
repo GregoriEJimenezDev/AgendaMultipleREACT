@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import useTheme from './hooks/useTheme'
-import Header from './components/Header'
-import Footer from './components/Footer'
 import HelpPanel from './components/HelpPanel'
 import AddContact from './components/AddContact'
 import ContactList from './components/ContactList'
+import ThemeToggle from './components/ThemeToggle'
 import './App.css'
 
 const API = 'https://www.raydelto.org/agenda.php'
@@ -43,10 +42,26 @@ export default function App() {
   }
 
   return (
-    <div className="app">
-      <Header tema={tema} onToggleTema={toggleTema} />
+    <>
+      <div className="top">
+        <div className="top-izq">
+          <span className="logo">📇</span>
+          <h1>Agenda de Contactos</h1>
+        </div>
+        <ThemeToggle tema={tema} onToggle={toggleTema} />
+      </div>
 
-      <main className="contenedor">
+      <div className="subbar">
+        <a href="https://raydelto.org" target="_blank" rel="noreferrer">raydelto.org</a>
+        <span className="sep">/</span>
+        agenda.php
+        <span className="sep">/</span>
+        contactos
+        <span className="sep">·</span>
+        <span className="react-pill">⚛️ React</span>
+      </div>
+
+      <div className="contenedor">
         <HelpPanel />
 
         <AddContact onAgregar={agregarContacto} />
@@ -57,9 +72,13 @@ export default function App() {
           error={errorRed}
           onRefresh={traerContactos}
         />
-      </main>
+      </div>
 
-      <Footer />
-    </div>
+      <div className="pie">
+        <span className="pie-react">⚛️ React</span>
+        <span className="pie-sep">·</span>
+        Agenda de Contactos
+      </div>
+    </>
   )
 }
