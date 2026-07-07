@@ -3,19 +3,12 @@ import ContactList from './components/ContactList'
 import AddContact from './components/AddContact'
 import './App.css'
 
-const API = 'http://www.raydelto.org/agenda.php'
+const API = 'https://www.raydelto.org/agenda.php'
 
 export default function App() {
   const [contactos, setContactos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [errorRed, setErrorRed] = useState(null)
-
-  const [tema, setTema] = useState(() => localStorage.getItem('agenda_tema') || 'claro')
-
-  // Aplica la clase en <html> para que body y todo herede las variables
-  useEffect(() => {
-    document.documentElement.setAttribute('data-tema', tema)
-  }, [tema])
 
   const traerContactos = async () => {
     setCargando(true)
@@ -23,9 +16,10 @@ export default function App() {
     try {
       const res = await fetch(API)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      setContactos(Array.isArray(await res.json()) ? await res.json() : [])
+      const datos = await res.json()
+      setContactos(Array.isArray(datos) ? datos : [])
     } catch {
-      setErrorRed('No se pudieron cargar los contactos. Verifica tu conexion.')
+      setErrorRed('No se pudieron cargar los contactos.')
     } finally {
       setCargando(false)
     }
@@ -33,32 +27,43 @@ export default function App() {
 
   useEffect(() => { traerContactos() }, [])
 
-  useEffect(() => { localStorage.setItem('agenda_tema', tema) }, [tema])
-
   const agregarContacto = async (nuevo) => {
     const res = await fetch(API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(nuevo),
     })
-    if (!res.ok) throw new Error('El servidor rechazo el contacto.')
+    if (!res.ok) throw new Error('El servidor rechazó el contacto.')
     await traerContactos()
   }
 
   return (
-    <div className="app">
-      <div className="encabezado">
-        <div>
-          <h1>📇 AgendaMultiple</h1>
-          <p className="sub">Conectada a <code>raydelto.org/agenda.php</code></p>
+    <>
+      <div className="header">
+        <div className="logo-wrap">
+          <img src="/logo.png" alt="Logo Agenda" onError={(e) => { e.target.style.display = 'none' }} />
+          <h1>Agenda de Contactos</h1>
         </div>
-        <button className="btn btn-tema" onClick={() => setTema(tema === 'claro' ? 'oscuro' : 'claro')}>
-          {tema === 'claro' ? '🌙' : '☀️'}
-        </button>
+      </div>
+      <div className="nav-bar">
+        Servidor: <a href="https://raydelto.org" target="_blank" rel="noreferrer">raydelto.org</a> &rsaquo;
+        Api: <strong>agenda.php</strong> &rsaquo;
+        Tabla: <strong>contactos</strong>
       </div>
 
-      <AddContact onAgregar={agregarContacto} />
-      <ContactList contactos={contactos} cargando={cargando} error={errorRed} />
-    </div>
+      <div className="container">
+        <AddContact onAgregar={agregarContacto} />
+        <ContactList
+          contactos={contactos}
+          cargando={cargando}
+          error={errorRed}
+          onRefresh={traerContactos}
+        />
+      </div>
+
+      <div className="footer">
+        Agenda de Contactos &mdash; React App
+      </div>
+    </>
   )
 }

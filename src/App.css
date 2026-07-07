@@ -1,236 +1,254 @@
-/* ── Paleta natural: tierra, barro, sol ── */
-
-:root, [data-tema="claro"] {
-  --fondo: #e8e0d5;
-  --panel: #f7f3ee;
-  --texto: #2b211b;
-  --texto-suave: #7a685b;
-  --borde: #cec0b3;
-  --borde-fino: #e0d6cc;
-  --input-bg: #fdfaf7;
-  --primario: #a05a3c;
-  --primario-hover: #8a4b30;
-  --primario-dis: #c9b5a8;
-  --danger: #b0534a;
-  --danger-hover: #f7e8e6;
-  --exito-bg: #e4efe1;
-  --exito-texto: #3d6b47;
-  --exito-borde: #c5ddbc;
-  --error-bg: #f5e4e2;
-  --error-texto: #b0534a;
-  --error-borde: #e8c8c4;
-  --sombra: rgba(100, 70, 50, 0.08);
-  --hover: #ede6de;
-}
-
-[data-tema="oscuro"] {
-  --fondo: #1c1613;
-  --panel: #2b231f;
-  --texto: #e3dbd4;
-  --texto-suave: #a69283;
-  --borde: #4a3d35;
-  --borde-fino: #3a2f29;
-  --input-bg: #221b18;
-  --primario: #c97d5a;
-  --primario-hover: #d48f6e;
-  --primario-dis: #5a4a40;
-  --danger: #e07060;
-  --danger-hover: #2e1d1a;
-  --exito-bg: #1d2e1b;
-  --exito-texto: #7cc07a;
-  --exito-borde: #2a4a28;
-  --error-bg: #2e1a1a;
-  --error-texto: #e07060;
-  --error-borde: #4a2828;
-  --sombra: rgba(0, 0, 0, 0.35);
-  --hover: #342a25;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html, body {
-  height: 100%;
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: var(--fondo);
-  color: var(--texto);
-  transition: background 0.3s, color 0.3s;
-}
-
-.app {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 32px 20px;
-}
-
-/* ── Cabecera ── */
-
-.encabezado {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 28px;
-}
-
-.encabezado h1 {
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.encabezado .sub {
-  color: var(--texto-suave);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 13px;
-  margin-top: 3px;
+  background: #e8e8e8;
+  color: #333;
+  min-height: 100vh;
 }
 
-.encabezado code {
-  font-size: 12px;
-}
+a { color: #0645ad; }
 
-/* ── Panel / tarjeta ── */
-
-.panel {
-  background: var(--panel);
-  border-radius: 10px;
-  box-shadow: 0 1px 8px var(--sombra);
-  padding: 20px;
-  margin-bottom: 20px;
-  transition: background 0.3s;
-}
-
-.panel h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-suave);
-  margin-bottom: 16px;
-}
-
-/* ── Formulario ── */
-
-.fila {
-  margin-bottom: 10px;
-}
-
-.fila label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--texto-suave);
-  margin-bottom: 3px;
-}
-
-.fila input {
-  width: 100%;
-  padding: 9px 11px;
-  border: 1px solid var(--borde);
-  border-radius: 7px;
-  font-size: 14px;
-  background: var(--input-bg);
-  color: var(--texto);
-  transition: border-color 0.15s, background 0.3s;
-}
-
-.fila input:focus {
-  outline: none;
-  border-color: var(--primario);
-  background: var(--panel);
-}
-
-.fila input::placeholder {
-  color: var(--borde);
-}
-
-/* ── Botones ── */
-
-.btn {
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.btn-prim {
-  background: var(--primario);
+/* ── Header ── */
+.header {
+  background: #4060a0;
   color: #fff;
-  width: 100%;
-  margin-top: 6px;
+  padding: 8px 16px;
+  border-bottom: 3px solid #2e4a7a;
 }
 
-.btn-prim:hover { background: var(--primario-hover); }
-.btn-prim:disabled { background: var(--primario-dis); cursor: not-allowed; }
-
-.btn-tema {
-  background: var(--panel);
-  font-size: 20px;
-  padding: 6px 12px;
-  box-shadow: 0 1px 6px var(--sombra);
-  line-height: 1;
+.header h1 {
+  font-size: 15px;
+  font-weight: bold;
 }
 
-.btn-tema:hover { background: var(--hover); }
-
-/* ── Mensajes ── */
-
-.msg {
-  padding: 8px 12px;
-  border-radius: 7px;
-  font-size: 13px;
-  margin-top: 10px;
+.header .logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.msg-bien {
-  background: var(--exito-bg);
-  color: var(--exito-texto);
-  border: 1px solid var(--exito-borde);
+.header .logo-wrap img {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #6a8abf;
+  border-radius: 3px;
+  background: #fff;
+  object-fit: contain;
 }
 
-.msg-mal {
-  background: var(--error-bg);
-  color: var(--error-texto);
-  border: 1px solid var(--error-borde);
+.nav-bar {
+  background: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 16px;
+  font-size: 12px;
+  color: #555;
 }
 
-/* ── Tabla ── */
+/* ── Container ── */
+.container {
+  max-width: 820px;
+  margin: 16px auto;
+  padding: 0 12px;
+}
 
-.tabla {
+/* ── Fieldset / Panel ── */
+fieldset {
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 0;
+  margin-bottom: 18px;
+  padding: 0;
+}
+
+legend {
+  background: #4060a0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  margin-left: 0;
+  border: 1px solid #2e4a7a;
+}
+
+.fieldset-body {
+  padding: 14px;
+}
+
+/* ── Form ── */
+.form-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
 }
 
-.tabla th {
+.form-table td {
+  padding: 5px 6px;
+  vertical-align: middle;
+}
+
+.form-table .lbl {
+  text-align: right;
+  width: 90px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.form-table input[type="text"] {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid #999;
+  background: #fff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.form-table input[type="text"]:focus {
+  border-color: #4060a0;
+  outline: none;
+}
+
+/* ── Buttons ── */
+.btn {
+  padding: 4px 14px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #888;
+  border-radius: 0;
+}
+
+.btn-submit {
+  background: #e8e8e8;
+  color: #333;
+}
+
+.btn-submit:hover { background: #d0d0d0; }
+.btn-submit:active { background: #bbb; }
+
+.btn-submit:disabled {
+  color: #999;
+  cursor: wait;
+}
+
+.btn-refresh {
+  background: #e8e8e8;
+  color: #333;
+  float: right;
+}
+
+.btn-refresh:hover { background: #d0d0d0; }
+
+.form-actions {
+  padding: 8px 6px 4px;
+}
+
+/* ── Messages ── */
+.msg {
+  padding: 6px 10px;
+  font-size: 12px;
+  margin-top: 8px;
+  display: none;
+  border: 1px solid;
+}
+
+.msg.show { display: block; }
+
+.msg-success {
+  background: #dff0d8;
+  border-color: #b2d8a0;
+  color: #306030;
+}
+
+.msg-error {
+  background: #f2dede;
+  border-color: #d8a0a0;
+  color: #803030;
+}
+
+/* ── Data Table ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #aaa;
+  font-size: 13px;
+}
+
+.data-table thead th {
+  background: #ddd;
+  border: 1px solid #aaa;
+  padding: 5px 10px;
   text-align: left;
-  padding: 7px 10px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--texto-suave);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  border-bottom: 2px solid var(--borde-fino);
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
 }
 
-.tabla th:first-child { width: 34px; text-align: center; }
-.tabla th:last-child { width: 54px; text-align: center; }
-
-.tabla td {
-  padding: 9px 10px;
-  border-bottom: 1px solid var(--borde-fino);
-}
-
-.tabla tbody tr:hover { background: var(--hover); }
-
-.tabla .num { text-align: center; color: var(--texto-suave); font-size: 13px; }
-
-.estado, .vacio {
+.data-table thead th:first-child {
+  width: 40px;
   text-align: center;
-  padding: 28px 10px;
-  color: var(--texto-suave);
-  font-size: 14px;
 }
 
-.vacio { font-style: italic; }
+.data-table tbody td {
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  color: #333;
+}
+
+.data-table tbody td:first-child {
+  text-align: center;
+  color: #666;
+}
+
+/* Zebra */
+.data-table tbody tr:nth-child(odd) { background: #fff; }
+.data-table tbody tr:nth-child(even) { background: #f2f2f2; }
+.data-table tbody tr:hover { background: #e0e8f0; }
+
+/* Status */
+.table-status {
+  text-align: center;
+  padding: 16px 10px;
+  color: #888;
+  font-size: 12px;
+  background: #fff;
+}
+
+.record-count {
+  font-size: 11px;
+  color: #666;
+  padding: 6px 0 0;
+}
+
+.panel-top {
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 11px;
+  color: #999;
+}
+
+/* ── Responsive ── */
+@media (max-width: 580px) {
+  .form-table .lbl {
+    text-align: left;
+    display: block;
+    width: auto;
+    padding-bottom: 0;
+  }
+  .form-table td { display: block; }
+  .form-table tr { display: block; margin-bottom: 4px; }
+}

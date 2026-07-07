@@ -1,35 +1,18 @@
-// Solo pinta la tabla — no tiene estado, no llama a la API, no hace nada raro.
-// Recibe todo por props y dibuja.
-
-export default function ContactList({ contactos, cargando, error }) {
-  // Mientras carga
-  if (cargando) {
-    return (
-      <div className="panel">
-        <h2>📋 Contactos guardados</h2>
-        <p className="estado">Cargando lista...</p>
-      </div>
-    )
-  }
-
-  // Si el fetch fallo
-  if (error) {
-    return (
-      <div className="panel">
-        <h2>📋 Contactos guardados</h2>
-        <p className="msg msg-mal">{error}</p>
-      </div>
-    )
-  }
-
+export default function ContactList({ contactos, cargando, error, onRefresh }) {
   return (
-    <div className="panel">
-      <h2>📋 Contactos guardados ({contactos.length})</h2>
+    <fieldset>
+      <legend>Contactos guardados</legend>
+      <div className="fieldset-body">
+        <div className="panel-top">
+          <button type="button" className="btn btn-refresh" onClick={onRefresh}>
+            Actualizar lista
+          </button>
+          <span className="record-count">
+            {contactos.length} fila{contactos.length !== 1 ? 's' : ''} en total.
+          </span>
+        </div>
 
-      {contactos.length === 0 ? (
-        <p className="vacio">Todavia no hay contactos. Agrega el primero.</p>
-      ) : (
-        <table className="tabla">
+        <table className="data-table">
           <thead>
             <tr>
               <th>#</th>
@@ -39,17 +22,31 @@ export default function ContactList({ contactos, cargando, error }) {
             </tr>
           </thead>
           <tbody>
-            {contactos.map((c, i) => (
-              <tr key={i}>
-                <td className="num">{i + 1}</td>
-                <td>{c.nombre}</td>
-                <td>{c.apellido}</td>
-                <td>{c.telefono}</td>
+            {cargando ? (
+              <tr>
+                <td colSpan={4} className="table-status">Cargando...</td>
               </tr>
-            ))}
+            ) : error ? (
+              <tr>
+                <td colSpan={4} className="table-status" style={{ color: '#903030' }}>{error}</td>
+              </tr>
+            ) : contactos.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="table-status">No hay registros.</td>
+              </tr>
+            ) : (
+              contactos.map((c, i) => (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{c.nombre}</td>
+                  <td>{c.apellido}</td>
+                  <td>{c.telefono}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
-      )}
-    </div>
+      </div>
+    </fieldset>
   )
 }
