@@ -1,18 +1,18 @@
 export default function ContactList({ contactos, cargando, error, onRefresh }) {
   return (
-    <fieldset>
-      <legend>Contactos guardados</legend>
-      <div className="fieldset-body">
-        <div className="panel-top">
-          <button type="button" className="btn btn-refresh" onClick={onRefresh}>
-            Actualizar lista
+    <div className="seccion">
+      <div className="seccion-titulo">📋 Contactos guardados</div>
+      <div className="seccion-cuerpo">
+        <div className="tabla-pie">
+          <button type="button" className="btn btn-derecha" onClick={onRefresh}>
+            ↻ Actualizar
           </button>
-          <span className="record-count">
-            {contactos.length} fila{contactos.length !== 1 ? 's' : ''} en total.
+          <span>
+            {contactos.length} registro{contactos.length !== 1 ? 's' : ''}
           </span>
         </div>
 
-        <table className="data-table">
+        <table className="tabla">
           <thead>
             <tr>
               <th>#</th>
@@ -24,15 +24,15 @@ export default function ContactList({ contactos, cargando, error, onRefresh }) {
           <tbody>
             {cargando ? (
               <tr>
-                <td colSpan={4} className="table-status">Cargando...</td>
+                <td colSpan={4} className="tabla-vacia">Cargando contactos...</td>
               </tr>
             ) : error ? (
               <tr>
-                <td colSpan={4} className="table-status" style={{ color: '#903030' }}>{error}</td>
+                <td colSpan={4} className="tabla-error">{error}</td>
               </tr>
             ) : contactos.length === 0 ? (
               <tr>
-                <td colSpan={4} className="table-status">No hay registros.</td>
+                <td colSpan={4} className="tabla-vacia">No hay contactos guardados.</td>
               </tr>
             ) : (
               contactos.map((c, i) => (
@@ -47,6 +47,6 @@ export default function ContactList({ contactos, cargando, error, onRefresh }) {
           </tbody>
         </table>
       </div>
-    </fieldset>
+    </div>
   )
 }

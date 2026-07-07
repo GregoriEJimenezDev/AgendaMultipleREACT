@@ -7,17 +7,12 @@ export default function AddContact({ onAgregar }) {
   const [enviando, setEnviando] = useState(false)
   const [mensaje, setMensaje] = useState(null)
 
-  const mostrarMsg = (texto, tipo) => {
-    setMensaje({ texto, tipo })
-    setTimeout(() => setMensaje(null), 5000)
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setMensaje(null)
 
     if (!nombre.trim() || !apellido.trim() || !telefono.trim()) {
-      mostrarMsg('Todos los campos son obligatorios.', 'error')
+      setMensaje({ texto: 'Todos los campos son obligatorios.', tipo: 'error' })
       return
     }
 
@@ -31,51 +26,40 @@ export default function AddContact({ onAgregar }) {
       setNombre('')
       setApellido('')
       setTelefono('')
-      mostrarMsg('Contacto agregado correctamente.', 'success')
+      setMensaje({ texto: 'Contacto agregado correctamente.', tipo: 'exito' })
     } catch (e) {
-      mostrarMsg('Error al agregar: ' + e.message, 'error')
+      setMensaje({ texto: 'Error: ' + e.message, tipo: 'error' })
     } finally {
       setEnviando(false)
     }
+    setTimeout(() => setMensaje(null), 5000)
   }
 
   return (
-    <fieldset>
-      <legend>Agregar nuevo contacto</legend>
-      <div className="fieldset-body">
+    <div className="seccion">
+      <div className="seccion-titulo">✚ Agregar nuevo contacto</div>
+      <div className="seccion-cuerpo">
         <form onSubmit={handleSubmit} autoComplete="off">
-          <table className="form-table">
-            <tbody>
-              <tr>
-                <td className="lbl">Nombre:</td>
-                <td>
-                  <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-                </td>
-              </tr>
-              <tr>
-                <td className="lbl">Apellido:</td>
-                <td>
-                  <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} />
-                </td>
-              </tr>
-              <tr>
-                <td className="lbl">Teléfono:</td>
-                <td>
-                  <input type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="form-actions">
-            <button type="submit" className="btn btn-submit" disabled={enviando}>
-              {enviando ? 'Enviando...' : 'Agregar Contacto'}
-            </button>
+          <div className="campos">
+            <div className="campo">
+              <label>Nombre:</label>
+              <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+            </div>
+            <div className="campo">
+              <label>Apellido:</label>
+              <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} />
+            </div>
+            <div className="campo">
+              <label>Teléfono:</label>
+              <input type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+            </div>
           </div>
-          {mensaje && (
-            <div className={`msg show msg-${mensaje.tipo}`}>{mensaje.texto}</div>
-          )}
+          <button type="submit" className="btn btn-accion" disabled={enviando}>
+            {enviando ? '⏳ Enviando...' : '💾 Agregar Contacto'}
+          </button>
+          {mensaje && <div className={`msg msg-${mensaje.tipo}`}>{mensaje.texto}</div>}
         </form>
       </div>
-    </fieldset>
+    </div>
   )
 }

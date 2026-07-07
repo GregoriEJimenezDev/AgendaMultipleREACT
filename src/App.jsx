@@ -1,6 +1,10 @@
-import { useState, useEffect, version as ReactVersion } from 'react'
-import ContactList from './components/ContactList'
+import { useState, useEffect } from 'react'
+import useTheme from './hooks/useTheme'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import HelpPanel from './components/HelpPanel'
 import AddContact from './components/AddContact'
+import ContactList from './components/ContactList'
 import './App.css'
 
 const API = 'https://www.raydelto.org/agenda.php'
@@ -9,6 +13,7 @@ export default function App() {
   const [contactos, setContactos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [errorRed, setErrorRed] = useState(null)
+  const { tema, toggle: toggleTema } = useTheme()
 
   const traerContactos = async () => {
     setCargando(true)
@@ -38,29 +43,23 @@ export default function App() {
   }
 
   return (
-    <>
-      <div className="top">
-        <div className="logo">📇</div>
-        <h1>Agenda de Contactos</h1>
-      </div>
-      <div className="subbar">
-        <a href="https://raydelto.org" target="_blank" rel="noreferrer">raydelto.org</a> / agenda.php / contactos
-        &nbsp;·&nbsp; Hecho con React
-      </div>
+    <div className="app">
+      <Header tema={tema} onToggleTema={toggleTema} />
 
-      <div className="contenedor">
+      <main className="contenedor">
+        <HelpPanel />
+
         <AddContact onAgregar={agregarContacto} />
+
         <ContactList
           contactos={contactos}
           cargando={cargando}
           error={errorRed}
           onRefresh={traerContactos}
         />
-      </div>
+      </main>
 
-      <div className="pie">
-        Agenda de Contactos &mdash; <code>React v{ReactVersion}</code>
-      </div>
-    </>
+      <Footer />
+    </div>
   )
 }
