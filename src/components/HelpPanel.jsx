@@ -27,6 +27,16 @@ export default function HelpPanel() {
             </p>
 
             <h6 className="text-uppercase fw-bold mb-2 mt-3" style={{ fontSize: '12px' }}>
+              Cómo usar
+            </h6>
+            <ul className="text-secondary mb-2" style={{ paddingLeft: '18px', marginBottom: '4px' }}>
+              <li>Llena los campos <strong>Nombre</strong>, <strong>Apellido</strong> y <strong>Teléfono</strong> y presiona <em>Agregar Contacto</em>.</li>
+              <li>Los contactos se guardan en el servidor y aparecen en la tabla de abajo.</li>
+              <li>Usa el botón <strong>✎ Editar</strong> en cualquier fila para modificar los datos.</li>
+              <li>Usa el botón <em>Actualizar</em> para refrescar la lista desde el servidor.</li>
+            </ul>
+
+            <h6 className="text-uppercase fw-bold mb-2 mt-3" style={{ fontSize: '12px' }}>
               API
             </h6>
             <p className="text-secondary mb-1">
