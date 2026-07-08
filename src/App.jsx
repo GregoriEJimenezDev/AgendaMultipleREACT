@@ -69,11 +69,11 @@ export default function App() {
       </div>
 
       <div className="subbar">
-        <a href="https://raydelto.org" target="_blank" rel="noreferrer">raydelto.org</a>
-        <span className="sep">/</span>
-        contactos
-        <span className="sep">·</span>
         <span className="react-pill">⚛️ React</span>
+        <span className="sep">·</span>
+        Gregori E. Jimenez
+        <span className="sep">·</span>
+        <a href="https://www.linkedin.com/in/gregori-evangelista-jimenez-5a077932b/" target="_blank" rel="noreferrer">LinkedIn</a>
       </div>
 
       <div className="contenedor">
@@ -89,9 +89,11 @@ export default function App() {
       </div>
 
       <div className="pie">
-        <span className="pie-react">⚛️ React</span>
+        Gregori E. Jimenez
         <span className="pie-sep">·</span>
-        Agenda de Contactos
+        <a href="https://www.linkedin.com/in/gregori-evangelista-jimenez-5a077932b/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <span className="pie-sep">·</span>
+        <span className="pie-react">⚛️ React</span>
       </div>
     </>
   )
