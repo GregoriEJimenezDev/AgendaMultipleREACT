@@ -71,8 +71,6 @@ export default function App() {
       <div className="subbar">
         <a href="https://raydelto.org" target="_blank" rel="noreferrer">raydelto.org</a>
         <span className="sep">/</span>
-        agenda.php
-        <span className="sep">/</span>
         contactos
         <span className="sep">·</span>
         <span className="react-pill">⚛️ React</span>
