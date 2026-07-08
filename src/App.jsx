@@ -41,6 +41,23 @@ export default function App() {
     await traerContactos()
   }
 
+  const editarContacto = async (indice, datos) => {
+    const res = await fetch(API, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos),
+    })
+    if (!res.ok) {
+      const postRes = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos),
+      })
+      if (!postRes.ok) throw new Error('No se pudo guardar la edición.')
+    }
+    await traerContactos()
+  }
+
   return (
     <>
       <div className="top">
@@ -63,14 +80,13 @@ export default function App() {
 
       <div className="contenedor">
         <HelpPanel />
-
         <AddContact onAgregar={agregarContacto} />
-
         <ContactList
           contactos={contactos}
           cargando={cargando}
           error={errorRed}
           onRefresh={traerContactos}
+          onEditar={editarContacto}
         />
       </div>
 

@@ -4,10 +4,10 @@ export default function HelpPanel() {
   const [abierto, setAbierto] = useState(false)
 
   return (
-    <div className={`ayuda ${abierto ? 'ayuda--abierto' : ''}`}>
+    <div className="mb-3">
       <button
         type="button"
-        className="ayuda-toggle"
+        className="btn btn-outline-secondary btn-sm"
         onClick={() => setAbierto((prev) => !prev)}
         aria-expanded={abierto}
       >
@@ -15,31 +15,34 @@ export default function HelpPanel() {
       </button>
 
       {abierto && (
-        <div className="ayuda-contenido">
-          <h4>Sobre esta aplicación</h4>
-          <p>
-            Esta es una agenda telefónica construida con <strong>React</strong> que se conecta
-            al servicio REST de <a href="https://raydelto.org" target="_blank" rel="noreferrer">raydelto.org</a>.
-          </p>
+        <div className="card mt-2 shadow-sm">
+          <div className="card-body" style={{ fontSize: '13px' }}>
+            <h6 className="text-uppercase fw-bold mb-2" style={{ fontSize: '12px' }}>
+              Sobre esta aplicación
+            </h6>
+            <p className="text-secondary mb-2">
+              Esta es una agenda telefónica construida con <strong>React</strong> que se conecta
+              al servicio REST de{' '}
+              <a href="https://raydelto.org" target="_blank" rel="noreferrer">raydelto.org</a>.
+            </p>
 
-          <h4>Cómo usar</h4>
-          <ul>
-            <li>Llena los campos <strong>Nombre</strong>, <strong>Apellido</strong> y <strong>Teléfono</strong> y presiona <em>Agregar Contacto</em>.</li>
-            <li>Los contactos se guardan en el servidor y aparecen en la tabla de abajo.</li>
-            <li>Usa el botón <em>Actualizar</em> para refrescar la lista desde el servidor.</li>
-          </ul>
+            <h6 className="text-uppercase fw-bold mb-2 mt-3" style={{ fontSize: '12px' }}>
+              API
+            </h6>
+            <p className="text-secondary mb-1">
+              <code>GET https://www.raydelto.org/agenda.php</code> — obtiene todos los contactos.
+            </p>
+            <p className="text-secondary mb-1">
+              <code>POST https://www.raydelto.org/agenda.php</code> — agrega un contacto (JSON: nombre, apellido, telefono).
+            </p>
 
-          <h4>API</h4>
-          <p>
-            <code>GET https://www.raydelto.org/agenda.php</code> — obtiene todos los contactos.<br />
-            <code>POST https://www.raydelto.org/agenda.php</code> — agrega un contacto (JSON: nombre, apellido, telefono).
-          </p>
-
-          <h4>Modo oscuro</h4>
-          <p>
-            Presiona el botón <strong>🌙 / ☀️</strong> en el menú superior para alternar entre modo claro y oscuro.
-            Tu preferencia se guarda automáticamente.
-          </p>
+            <h6 className="text-uppercase fw-bold mb-2 mt-3" style={{ fontSize: '12px' }}>
+              Modo oscuro
+            </h6>
+            <p className="text-secondary mb-0">
+              Presiona <strong>🌙 / ☀️</strong> en el menú superior para alternar. Tu preferencia se guarda automáticamente.
+            </p>
+          </div>
         </div>
       )}
     </div>

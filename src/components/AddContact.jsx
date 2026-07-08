@@ -36,28 +36,32 @@ export default function AddContact({ onAgregar }) {
   }
 
   return (
-    <div className="seccion">
-      <div className="seccion-titulo">✚ Agregar nuevo contacto</div>
-      <div className="seccion-cuerpo">
+    <div className="card shadow-sm mb-3">
+      <div className="card-header text-white fw-semibold text-uppercase" style={{ fontSize: '12px', background: 'var(--primario)', borderBottom: '2px solid var(--primario-oscuro)' }}>
+        ✚ Agregar nuevo contacto
+      </div>
+      <div className="card-body p-3">
         <form onSubmit={handleSubmit} autoComplete="off">
-          <div className="campos">
-            <div className="campo">
-              <label>Nombre:</label>
-              <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-            </div>
-            <div className="campo">
-              <label>Apellido:</label>
-              <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} />
-            </div>
-            <div className="campo">
-              <label>Teléfono:</label>
-              <input type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
-            </div>
+          <div className="mb-2">
+            <label className="form-label fw-semibold text-secondary" style={{ fontSize: '12px', width: '80px' }}>Nombre:</label>
+            <input type="text" className="form-control form-control-sm" value={nombre} onChange={(e) => setNombre(e.target.value)} />
           </div>
-          <button type="submit" className="btn btn-accion" disabled={enviando}>
+          <div className="mb-2">
+            <label className="form-label fw-semibold text-secondary" style={{ fontSize: '12px', width: '80px' }}>Apellido:</label>
+            <input type="text" className="form-control form-control-sm" value={apellido} onChange={(e) => setApellido(e.target.value)} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold text-secondary" style={{ fontSize: '12px', width: '80px' }}>Teléfono:</label>
+            <input type="text" className="form-control form-control-sm" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+          </div>
+          <button type="submit" className="btn btn-sm fw-semibold text-white" style={{ background: 'var(--primario)', borderColor: 'var(--primario-oscuro)' }} disabled={enviando}>
             {enviando ? '⏳ Enviando...' : '💾 Agregar Contacto'}
           </button>
-          {mensaje && <div className={`msg msg-${mensaje.tipo}`}>{mensaje.texto}</div>}
+          {mensaje && (
+            <div className={`mt-2 alert alert-${mensaje.tipo === 'error' ? 'danger' : 'success'} py-2 px-3 mb-0`} style={{ fontSize: '12px' }}>
+              {mensaje.texto}
+            </div>
+          )}
         </form>
       </div>
     </div>
